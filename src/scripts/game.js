@@ -6,6 +6,7 @@ let recordValue;
 
 const content = document.getElementById('board');
 const scoreNum = document.querySelector('.score');
+const currentScore = document.querySelector('.currentScore');
 const record = document.querySelector('.record');
 const scoreRecordValue = document.querySelector('.scoreRecord');
 const alertScreen = document.querySelector('.alert');
@@ -92,6 +93,7 @@ function handleInput(key) {
   //   if (state === true) {
   //     alertScreen.classList.remove('hidden');
   //     content.classList.add('inactive');
+  //     currentScore.innerText = score;
   //   }
   //   state = false;
   //   button.addEventListener('click', (e) => {
@@ -109,6 +111,7 @@ function handleInput(key) {
     if (state === true) {
       alertScreen.classList.remove('hidden');
       content.classList.add('inactive');
+      currentScore.innerText = score;
     }
     state = false;
     button.addEventListener('click', (e) => {
