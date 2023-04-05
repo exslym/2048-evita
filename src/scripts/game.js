@@ -123,6 +123,7 @@ function handleInput(key) {
   } else {
     state = true;
   }
+
   setupInput();
 }
 
