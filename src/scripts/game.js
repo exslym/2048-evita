@@ -54,8 +54,6 @@ function eraseBoard() {
   score = 0;
 }
 
-let state = true;
-
 function setupInput() {
   window.addEventListener('keyup', handleKeydown, { once: true });
   if (!content.classList.contains('inactive')) {
@@ -106,24 +104,6 @@ function handleInput(key) {
   //   state = true;
   // }
 
-  if (score % 2048 === 0 && score !== 0) {
-    scoreNum.style.color = 'lightgreen';
-    if (state === true) {
-      alertScreen.classList.remove('hidden');
-      content.classList.add('inactive');
-      currentScore.innerText = score;
-    }
-    state = false;
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      alertScreen.classList.add('hidden');
-      content.classList.remove('inactive');
-      window.addEventListener('touchstart', handleTouchStart, { once: true, passive: false });
-    });
-  } else {
-    state = true;
-  }
-
   setupInput();
 }
 
@@ -158,6 +138,8 @@ function handleTouchStart(e) {
   );
 }
 
+let state = true;
+
 function updateTile(tile, num) {
   tile.innerText = '';
   tile.classList.value = ''; // clear the classList
@@ -168,6 +150,23 @@ function updateTile(tile, num) {
     tile.classList.add('colored');
     tile.style.setProperty('--bg-ligthness', `${bgLightness}%`);
     tile.style.setProperty('--text-ligthness', `${bgLightness < 50 ? 90 : 10}%`);
+    
+    if (num % 2048 === 0) {
+    if (state === true) {
+    alertScreen.classList.remove('hidden');
+      content.classList.add('inactive');
+      currentScore.innerText = num;
+    }
+    state = false;
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      alertScreen.classList.add('hidden');
+      content.classList.remove('inactive');
+      window.addEventListener('touchstart', handleTouchStart, { once: true, passive: false });
+    });
+  } else {
+    state = true;
+  }
   }
 }
 
