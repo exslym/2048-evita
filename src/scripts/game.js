@@ -16,7 +16,9 @@ const restart = document.querySelector('.restart');
 
 export const game = function setGame() {
   // localStorage.removeItem('scoreRecord');
-
+  if (!localStorage.getItem('scoreRecord')) {
+    localStorage.setItem('scoreRecord', 0);
+  }
   // create start board
   createBoard();
   // create 2 to begin the game
@@ -41,9 +43,6 @@ function createBoard() {
       updateTile(tile, num);
       document.getElementById('board').append(tile);
     }
-  }
-  if (!localStorage.getItem('scoreRecord')) {
-    localStorage.setItem('scoreRecord', 0);
   }
 }
 
@@ -126,24 +125,6 @@ if (button) {
     alertScreen.classList.add('hidden');
     content.classList.remove('inactive');
     window.addEventListener('touchstart', handleTouchStart, { once: true, passive: false });
-  });
-}
-
-if (restart) {
-  restart.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (+localStorage.getItem('scoreRecord') <= recordValue) {
-      scoreRecordValue.innerText = recordValue;
-      localStorage.setItem('scoreRecord', recordValue);
-    }
-    warningScreen.classList.add('hidden');
-    content.classList.remove('inactive');
-    window.addEventListener('touchstart', handleTouchStart, { once: true, passive: false });
-    record.classList.remove('hidden');
-    count = 0;
-    document.querySelector('.score').innerText = 0;
-    eraseBoard();
-    createBoard();
   });
 }
 
@@ -308,6 +289,24 @@ function hasEmptyTile() {
     recordValue = score;
     warningScreen.classList.remove('hidden');
     content.classList.add('inactive');
+
+    if (restart) {
+      restart.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (+localStorage.getItem('scoreRecord') <= recordValue) {
+          localStorage.setItem('scoreRecord', recordValue);
+        }
+        scoreRecordValue.innerText = `${localStorage.getItem('scoreRecord')}`;
+        warningScreen.classList.add('hidden');
+        content.classList.remove('inactive');
+        window.addEventListener('touchstart', handleTouchStart, { once: true, passive: false });
+        record.classList.remove('hidden');
+        count = 0;
+        document.querySelector('.score').innerText = '0';
+        eraseBoard();
+        createBoard();
+      });
+    }
   }
   return false;
 }
